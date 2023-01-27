@@ -47,7 +47,7 @@ def VPO(wb, sheet):
     dataAll = []
     def dataX(sheet, StartRow, EndRow, dataAll, col):
         cel = importdata(sheet, StartRow, col, EndRow, col)
-        data = [i for i in cel if i != '']
+        data = [i if i != '' else 0 for i in cel]
         # print(f"data = {data}")
         dataAll.append(data)
         return dataAll
@@ -164,7 +164,8 @@ def Pkzm():
     if CountBook != 0:
         for i in range(1, CountBook + 1):
             Namebook = Excel.Workbooks(i).Name
-            if "ведомость площадей и объемов.xls" in Namebook:
+            
+            if "ведомость площадей и объемов" in Namebook:
                 wb1 = Excel.Workbooks(Namebook)
 
     if wb1 == None:
@@ -178,7 +179,8 @@ def Pkzm():
     if wb1 != None:
         sig.signal_Probar.emit(ui.progressBar_1, 20)
         Excel.Visible = 1
-        Excel.DisplayAlerts = False
+        # Excel.DisplayAlerts = False
+        Excel.DisplayAlerts = True
         fail = os.getcwd() + "\\Автомобильные дороги.xltx"
         # wb, sheet = Book(fail=fail)
         wb = Excel.Workbooks.Open(fail)
@@ -204,7 +206,6 @@ def Pkzm():
         sleep(1)
         
         Namebook = wb.Name
-        # print(Namebook)
 
         sheet = wb.Worksheets("Земляные работы...")
         sheet.Activate()
